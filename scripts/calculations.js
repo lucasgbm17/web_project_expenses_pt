@@ -14,7 +14,6 @@ let expenseEntries = [
 
 for (let i = 0; i < expenseEntries.length; i++) {
   totalExpensesValue = totalExpensesValue + expenseEntries[i][1];
-  console.log(`Despesas totais: ${totalExpensesValue}.`);
 }
 
 function calculateAverageExpense() {
@@ -37,21 +36,6 @@ function updateBalanceColor() {
   return balanceColor;
 }
 
-function calculateCategoryExpenses(category) {
-  let total = 0;
-
-  for (let i = 0; i < expenseEntries.length; i++) {
-    const [cat, amount] = expenseEntries[i];
-    if (
-      typeof cat === "string" &&
-      cat.toLowerCase() === String(category).toLowerCase()
-    ) {
-      total += Number(amount) || 0;
-    }
-  }
-  return total;
-}
-
 const categories = [
   "groceries",
   "restaurants",
@@ -60,6 +44,23 @@ const categories = [
   "subscriptions",
 ];
 
+//soma cada categoria;
+function calculateCategoryExpenses(category) {
+  if (categories.indexOf(category) === -1) {
+    return;
+  }
+
+  let categoryTotal = 0;
+  for (const expense of expenseEntries) {
+    if (expense[0] === category) {
+      categoryTotal += expense[1];
+    }
+  }
+  return categoryTotal;
+}
+calculateCategoryExpenses();
+
+//pega a categoria mais alta;
 function getCategoriesTotals() {
   const categoriesTotals = [];
   for (let i = 0; i < categories.length; i++) {
@@ -90,6 +91,6 @@ function calculateLargestCategory() {
 
 function addExpenseEntry(entry) {
   expenseEntries.push(entry);
-  totalExpensesValue += Number(entry[1]) || 0;
+  totalExpensesValue += Number(entry[1]);
   return totalExpensesValue;
 }
