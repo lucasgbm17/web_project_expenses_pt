@@ -24,6 +24,8 @@ function calculateBalance() {
   return budgetValue - totalExpensesValue;
 }
 
+let balanceColor = "green";
+
 function updateBalanceColor() {
   const i = calculateBalance();
   if (i < 0) {
